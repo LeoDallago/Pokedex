@@ -14,4 +14,8 @@ export class PokeApiService {
   public selecionarTodos(): Observable<any> {
     return this.http.get(this.url)
   }
+
+  public selecionarDetalhesPorUrl(url: string): Observable<any> {
+    return this.http.get<any>(url);
+  }
 }
