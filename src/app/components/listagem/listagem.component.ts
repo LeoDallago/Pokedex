@@ -65,6 +65,7 @@ export class ListagemComponent implements OnInit{
 
   private mapearPokemon(obj: any): Pokemon {
     return {
+      id: obj.id,
       nome: converterParaTitleCase(obj.name),
       urlSprite: obj.sprites.other.dream_world.front_default,
       tipos: obj.types.map(this.mapearTipoPokemon),

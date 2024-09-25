@@ -18,4 +18,10 @@ export class PokeApiService {
   public selecionarDetalhesPorUrl(url: string): Observable<any> {
     return this.http.get<any>(url);
   }
+
+  selecionarDetalhesPorId(id: number) {
+    const urlCompleto = `${this.url}/${id}`;
+
+    return this.http.get<any>(urlCompleto);
+  }
 }
