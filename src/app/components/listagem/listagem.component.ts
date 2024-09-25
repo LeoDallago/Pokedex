@@ -4,6 +4,7 @@ import { NgClass, NgForOf } from "@angular/common";
 import { PokeApiService } from "../../services/poke-api.service";
 import { converterParaTitleCase } from "../../util/converter-para-title-case";
 import { TipoPokemon } from "../../models/tipo-pokemon";
+import { RouterLink } from "@angular/router";
 
 @Component({
   selector: 'app-listagem',
@@ -11,6 +12,7 @@ import { TipoPokemon } from "../../models/tipo-pokemon";
   imports: [
     NgClass,
     NgForOf,
+    RouterLink
   ],
   templateUrl: './listagem.component.html',
   styleUrl: './listagem.component.scss'
