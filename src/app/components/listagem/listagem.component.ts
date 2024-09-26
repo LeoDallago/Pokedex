@@ -5,6 +5,7 @@ import { PokeApiService } from "../../services/poke-api.service";
 import { converterParaTitleCase } from "../../util/converter-para-title-case";
 import { TipoPokemon } from "../../models/tipo-pokemon";
 import { RouterLink } from "@angular/router";
+import { CardPokemonComponent } from "./card-pokemon/card-pokemon.component";
 
 @Component({
   selector: 'app-listagem',
@@ -12,41 +13,32 @@ import { RouterLink } from "@angular/router";
   imports: [
     NgClass,
     NgForOf,
-    RouterLink
+    RouterLink,
+    CardPokemonComponent
   ],
   templateUrl: './listagem.component.html',
   styleUrl: './listagem.component.scss'
 })
 export class ListagemComponent implements OnInit{
-
   public pokemons: Pokemon[];
 
   constructor(private pokeApiService: PokeApiService) {
     this.pokemons = [];
+    this.offsetPaginacao = 0;
   }
 
-  public coresBackgroundTipo: any = {
-    Normal: 'fundo-tipo-normal',
-    Fire: 'fundo-tipo-fogo',
-    Water: 'fundo-tipo-agua',
-    Electric: 'fundo-tipo-eletrico',
-    Ice: 'fundo-tipo-gelo',
-    Grass: 'fundo-tipo-grama',
-    Bug: 'fundo-tipo-inseto',
-    Poison: 'fundo-tipo-veneno',
-    Flying: 'fundo-tipo-voador',
-    Ground: 'fundo-tipo-terra',
-    Rock: 'fundo-tipo-pedra',
-    Fighting: 'fundo-tipo-lutador',
-    Psychic: 'fundo-tipo-psiquico',
-    Ghost: 'fundo-tipo-fantasma',
-    Dark: 'fundo-tipo-sombrio',
-    Fairy: 'fundo-tipo-fada',
-    Steel: 'fundo-tipo-aco',
-  };
+ public ngOnInit(): void {
+    this.obterPokemons()
+  }
 
-  ngOnInit(): void {
-    this.pokeApiService.selecionarTodos().subscribe((res) => {
+ public buscarMairResultados(): void {
+    this.offsetPaginacao += 20;
+
+    this.obterPokemons()
+  }
+
+  private obterPokemons(){
+    this.pokeApiService.selecionarTodos(this.offsetPaginacao).subscribe((res) => {
       const arrayDeResultados = res.results as any[];
 
       for (let resultado of arrayDeResultados) {
@@ -62,6 +54,9 @@ export class ListagemComponent implements OnInit{
       this.pokemons = arrayDeResultados.map(this.mapearPokemon);
     });
   }
+
+  private offsetPaginacao: number;
+
 
   private mapearPokemon(obj: any): Pokemon {
     return {

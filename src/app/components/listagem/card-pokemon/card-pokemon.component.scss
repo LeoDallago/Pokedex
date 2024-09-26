@@ -1,0 +1,17 @@
+.app-card-pokemon {
+  height: 350px;
+  outline: 1px transparent solid;
+  background: #c8c8e3bd;
+  background: -webkit-linear-gradient(to bottom,  #686870, rgba(17, 44, 113, 0.57));
+  background: linear-gradient(to bottom,  #686870, rgba(17, 44, 113, 0.57));
+  transition: outline 200ms ease-in-out;
+
+  &:hover {
+    outline: 1px #adabd8 solid;
+  }
+}
+
+.app-img-pokemon {
+  max-width: 200px;
+  max-height: 200px;
+}
