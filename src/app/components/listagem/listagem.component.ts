@@ -1,11 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Pokemon } from "../../models/pokemon";
-import { NgClass, NgForOf } from "@angular/common";
+import { NgClass, NgForOf, NgIf } from "@angular/common";
 import { PokeApiService } from "../../services/poke-api.service";
 import { converterParaTitleCase } from "../../util/converter-para-title-case";
 import { TipoPokemon } from "../../models/tipo-pokemon";
 import { RouterLink } from "@angular/router";
 import { CardPokemonComponent } from "./card-pokemon/card-pokemon.component";
+import { BuscaComponent } from "../busca/busca.component";
 
 @Component({
   selector: 'app-listagem',
@@ -13,14 +14,18 @@ import { CardPokemonComponent } from "./card-pokemon/card-pokemon.component";
   imports: [
     NgClass,
     NgForOf,
+    NgIf,
     RouterLink,
-    CardPokemonComponent
+    CardPokemonComponent,
+    BuscaComponent
   ],
   templateUrl: './listagem.component.html',
   styleUrl: './listagem.component.scss'
 })
 export class ListagemComponent implements OnInit{
   public pokemons: Pokemon[];
+
+  public buscaRealizada: boolean = false;
 
   constructor(private pokeApiService: PokeApiService) {
     this.pokemons = [];
@@ -34,6 +39,20 @@ export class ListagemComponent implements OnInit{
  public buscarMairResultados(): void {
     this.offsetPaginacao += 20;
 
+    this.obterPokemons()
+  }
+
+  public filtrarPokemons(textoFiltro: string): void{
+    this.buscaRealizada = true;
+   this.pokemons = this.pokemons.filter(p => {
+      return p.nome.toLowerCase().includes(textoFiltro)
+    })
+  }
+
+  public limparFiltro(){
+    this.buscaRealizada = false;
+
+    this.pokemons = [];
     this.obterPokemons()
   }
 
